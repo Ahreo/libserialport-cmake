@@ -4,7 +4,7 @@
 #
 #	Scott Mudge - mail@scottmudge.com
 
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.22)
 project(serialport)
 
 if (WIN32)
@@ -34,7 +34,10 @@ add_library(${PROJECT_NAME}-static STATIC ${SOURCE_FILES})
 set_target_properties(${PROJECT_NAME}-static PROPERTIES OUTPUT_NAME ${PROJECT_NAME}) 
 add_library(${PROJECT_NAME}-shared SHARED ${SOURCE_FILES})
 set_target_properties(${PROJECT_NAME}-shared PROPERTIES OUTPUT_NAME ${PROJECT_NAME}) 
-include_directories(./)
+target_include_directories(${PROJECT_NAME}-static PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(${PROJECT_NAME}-shared PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+
 if(WIN32)
 target_link_libraries(${PROJECT_NAME}-static cfgmgr32 SetupAPI)
 target_link_libraries(${PROJECT_NAME}-shared cfgmgr32 SetupAPI)
